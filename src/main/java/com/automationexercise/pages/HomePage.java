@@ -1,5 +1,6 @@
 package com.automationexercise.pages;
 
+import com.automationexercise.components.AddToCartModalComponent;
 import com.automationexercise.components.FooterComponent;
 import com.automationexercise.utils.ElementAction;
 import org.openqa.selenium.By;
@@ -18,15 +19,29 @@ public class HomePage {
     By productsIcon = By.partialLinkText("Products");
     By cartIcon = By.partialLinkText("Cart");
     By apiTestingIcon = By.partialLinkText("API Testing");
+    By recommendedItemsSign = By.xpath(".//h2[contains(text(),'recommended items')]");
+
 
 
     private WebDriver driver;
     private FooterComponent footer;
+    private AddToCartModalComponent addToCartModalComponent;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
         this.footer = new FooterComponent(driver);
+        this.addToCartModalComponent = new AddToCartModalComponent(driver);
     }
+
+    public FooterComponent getFooter() {
+        return footer;
+    }
+
+    public AddToCartModalComponent getAddToCartModalComponent() {
+        return addToCartModalComponent;
+    }
+
+
 
     public void clickHomeIcon() {
         ElementAction.clickElement(driver, homeIcon);
@@ -76,12 +91,19 @@ public class HomePage {
         return new AccountCreation_DeletionConfirmationPage(driver);
     }
 
-    private void clickIcon(By icon) {
-        ElementAction.clickElement(driver, icon);
+    public void addProductToCartFromRecommended(String productName){
+        ElementAction.clickElement(
+                driver,
+                By.xpath(".//div[@class = 'recommended_items']//p[text()='"+productName+"']//following-sibling::a")
+        );
     }
 
-    public FooterComponent getFooter() {
-        return footer;
+    public boolean isRecommendedItemsDisplayed() {
+        return ElementAction.isVisible(driver, recommendedItemsSign);
+    }
+
+    private void clickIcon(By icon) {
+        ElementAction.clickElement(driver, icon);
     }
 
 }

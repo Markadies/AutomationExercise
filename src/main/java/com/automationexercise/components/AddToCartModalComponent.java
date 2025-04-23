@@ -7,16 +7,17 @@ import org.openqa.selenium.WebDriver;
 
 public class AddToCartModalComponent {
     private WebDriver driver;
-    private By modalTitle = By.xpath("//h2[contains(text(),'Product added')]");
+    private By modalMessage = By.xpath(".//div[@id='cartModal']//p[contains(text(),'product')]");
     private By continueShoppingButton = By.xpath("//button[@data-dismiss='modal']");
     private By viewCartButton = By.partialLinkText("View Cart");
+
 
     public AddToCartModalComponent(WebDriver driver) {
         this.driver = driver;
     }
 
     public boolean isModalVisible() {
-        return ElementAction.isVisible(driver, modalTitle);
+        return ElementAction.isVisible(driver, modalMessage);
     }
 
     public void clickContinueShoppingButton() {

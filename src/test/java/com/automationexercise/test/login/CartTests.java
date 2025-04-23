@@ -51,7 +51,14 @@ public class CartTests extends BaseTests {
 
     @Test
     public void testAddToCartFromRecommendedItems_TC22(){
-        
+        String product = "Winter Top";
+        homePage.checkHomePageVisible();
+        homePage.addProductToCartFromRecommended(product);
+        assertTrue(homePage.getAddToCartModalComponent().isModalVisible(), "Add to cart modal is not visible");
+
+        var cartPage = homePage.getAddToCartModalComponent().clickViewCartButton();
+        assertTrue(cartPage.isProductInCart(product), "Product not in Cart");
+
     }
 
 
